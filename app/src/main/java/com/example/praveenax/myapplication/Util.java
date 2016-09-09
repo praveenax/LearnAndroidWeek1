@@ -25,12 +25,12 @@ public class Util {
         alertDialog.show();
     }
 
-    public static void showHelp(String message,Context context) {
+    public static void showHelp(String title,String message,Context context) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 context);
 
         // set title
-        alertDialogBuilder.setTitle("How to Play!");
+        alertDialogBuilder.setTitle(title);
 
         // set dialog message
         alertDialogBuilder.setMessage(message);

@@ -42,9 +42,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Toast.makeText(getApplicationContext(),
                 "Button is clicked "+mobileArray[position], Toast.LENGTH_SHORT).show();
 
-        Util.showHelp("Objective: To turn off all the Lights with the least number of moves \n" +
-                "\n" +
-                "Each switch is inter-connected with other lights in a perpendicular fashion",this);
+        Util.showHelp("OS Name!",""+mobileArray[position]+" is Selected",this);
 
 
 
@@ -52,9 +50,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onClick(View view) {
-        Util.showHelp("TEST NOTE \n" +
-                "\n" +
-                "Each switch is inter-connected with other lights in a perpendicular fashion",this);
+        Util.showHelp("Add New Note","TEST NOTE",this);
 
     }
 }
