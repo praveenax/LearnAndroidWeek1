@@ -1,4 +1,4 @@
-<resources>
-    <string name="app_name">My Application</string>
+<resources>s
+    <string name="app_name">To Do App</string>
     <string name="new_note">New Note</string>
 </resources>
