@@ -58,10 +58,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 //
 //        startActivity(in1);
 
-        Toast.makeText(getApplicationContext(),
+//        Toast.makeText(getApplicationContext(),
 //                "Button is clicked "+mobileArray[position], Toast.LENGTH_SHORT).show();
 //        Toast.makeText(getApplicationContext(),
-                "Button is clicked "+mobArray.get(position) , Toast.LENGTH_SHORT).show();
+//                "Button is clicked "+mobArray.get(position) , Toast.LENGTH_SHORT).show();
 
 //        Util.showHelp("OS Name!",""+mobileArray[position]+" is Selected",this);
         Util.showHelp("OS Name!",""+mobArray.get(position)+" is Selected",this);
