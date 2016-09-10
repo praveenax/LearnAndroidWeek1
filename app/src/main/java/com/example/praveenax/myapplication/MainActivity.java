@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.content.DialogInterface;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.EditText;
 
@@ -22,8 +23,9 @@ import com.snappydb.SnappydbException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     // Array of strings...
     String[] mobileArray = {"Android","IPhone","WindowsMobile","Blackberry","WebOS","Ubuntu","Windows7","Max OS X"};
@@ -46,22 +48,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             snappydb = DBFactory.open(this); //create or open an existing databse using the default name
 
             mobArray = new ArrayList<String>();
-//            mobArray.add("Android");
-//            mobArray.add("IPhone");
-//            mobArray.add("WindowsMobile");
-//            mobArray.add("Blackberry");
-//            mobArray.add("WebOS");
-//            mobArray.add("Ubuntu");
-//            mobArray.add("Windows7");
-//            mobArray.add("Max OS X");
-//
-////            snappydb.put("name", "Jack Reacher");
-////            snappydb.putInt("age", 42);
-////            snappydb.putBoolean("single", true);
-//            String[] frnames=mobArray.toArray(new String[mobArray.size()]);
-//            snappydb.put("task_items", frnames);
-
-
 
             String   name   =  snappydb.get("name");
             int        age    =  snappydb.getInt("age");
@@ -88,7 +74,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             Button new_note = (Button)findViewById(R.id.button);
             new_note.setOnClickListener(this);
-//            snappydb.close();
+
+            // Spinner element
+
+            Spinner spinner = (Spinner) findViewById(R.id.spinner);
+
+            // Spinner click listener
+            spinner.setOnItemSelectedListener(this);
+
+            // Spinner Drop down elements
+            List<String> categories = new ArrayList<String>();
+            categories.add("All");
+            categories.add("Open");
+            categories.add("Closed");
+
+            // Creating adapter for spinner
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+
+            // Drop down layout style - list view with radio button
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            // attaching data adapter to spinner
+            spinner.setAdapter(dataAdapter);
+
 
         } catch (SnappydbException e) {
 
@@ -97,16 +105,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
 
-//        mobArray = new ArrayList<String>();
-//        mobArray.add("Android");
-//        mobArray.add("IPhone");
-//        mobArray.add("WindowsMobile");
-//        mobArray.add("Blackberry");
-//        mobArray.add("WebOS");
-//        mobArray.add("Ubuntu");
-//        mobArray.add("Windows7");
-//        mobArray.add("Max OS X");
-
 
     }
 
@@ -114,20 +112,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> arg0, View arg1,
                             int position, long id) {
 
-//        Intent in1 = new Intent(Activites_Activity.this, Activity_display.class);
-//
-//        startActivity(in1);
-
-//        Toast.makeText(getApplicationContext(),
-//                "Button is clicked "+mobileArray[position], Toast.LENGTH_SHORT).show();
-//        Toast.makeText(getApplicationContext(),
-//                "Button is clicked "+mobArray.get(position) , Toast.LENGTH_SHORT).show();
-
-//        Util.showHelp("OS Name!",""+mobileArray[position]+" is Selected",this);
         Util.showHelp("OS Name!",""+mobArray.get(position)+" is Selected",this);
 
+    }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString();
 
+        // Showing selected spinner item
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
+
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
     }
 
     @Override
