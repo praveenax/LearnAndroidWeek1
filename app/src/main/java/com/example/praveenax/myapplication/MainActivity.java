@@ -82,10 +82,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             // Spinner element
 
-            Spinner spinner = (Spinner) findViewById(R.id.spinner);
+//            Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
             // Spinner click listener
-            spinner.setOnItemSelectedListener(this);
+//            spinner.setOnItemSelectedListener(this);
 
             // Spinner Drop down elements
             List<String> categories = new ArrayList<String>();
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
             // attaching data adapter to spinner
-            spinner.setAdapter(dataAdapter);
+//            spinner.setAdapter(dataAdapter);
 
 
         } catch (SnappydbException e) {
