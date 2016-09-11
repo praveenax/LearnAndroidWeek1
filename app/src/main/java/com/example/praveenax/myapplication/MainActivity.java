@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.content.DialogInterface;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -28,7 +29,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     // Array of strings...
-    String[] mobileArray = {"Android","IPhone","WindowsMobile","Blackberry","WebOS","Ubuntu","Windows7","Max OS X"};
+    String[] mobileArray = {"Android", "IPhone", "WindowsMobile", "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X"};
 
     private EditText result;
     ArrayList<String> mobArray;
@@ -49,22 +50,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             mobArray = new ArrayList<String>();
 
-            String   name   =  snappydb.get("name");
-            int        age    =  snappydb.getInt("age");
-            boolean  single =  snappydb.getBoolean("single");
-            String[] books  =  snappydb.getArray("task_items", String.class);// get array of string
+            String name = snappydb.get("name");
+            int age = snappydb.getInt("age");
+            boolean single = snappydb.getBoolean("single");
+            String[] books = snappydb.getArray("task_items", String.class);// get array of string
 
 //            ArrayList<String> aListNumbers
-            if(books.length == 0){
-                mobArray= new ArrayList<String>();
-            }else{
-                mobArray= new ArrayList<String>(Arrays.asList(books));
+            if (books.length == 0) {
+                mobArray = new ArrayList<String>();
+            } else {
+                mobArray = new ArrayList<String>(Arrays.asList(books));
             }
 
 
 //            Util.showHelp("TEST!",""+books[0] +" is Selected",this);
 
-            adapter = new ArrayAdapter<String>(this, R.layout.act_listview, mobArray);
+//            adapter = new ArrayAdapter<String>(this, R.layout.act_listview, mobArray);
+            adapter = new CustomAdapter(this,books);
+//            adapter = new ArrayAdapter<String>(this, R.layout.act_listview, mobArray);
+// REFER - https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
+
 
             ListView listView = (ListView) findViewById(R.id.listView);
             listView.setOnItemClickListener(this);
@@ -72,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             snappydb.close();
 
-            Button new_note = (Button)findViewById(R.id.button);
+            Button new_note = (Button) findViewById(R.id.button);
             new_note.setOnClickListener(this);
 
             // Spinner element
@@ -100,10 +105,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         } catch (SnappydbException e) {
 
-            Log.e("test",e.toString());
+            Log.e("test", e.toString());
         }
-
-
 
 
     }
@@ -112,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> arg0, View arg1,
                             int position, long id) {
 
-        Util.showHelp("OS Name!",""+mobArray.get(position)+" is Selected",this);
+        Util.showHelp("OS Name!", "" + mobArray.get(position) + " is Selected", this);
 
     }
 
@@ -150,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 .setCancelable(false)
                 .setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
+                            public void onClick(DialogInterface dialog, int id) {
                                 // get user input and set it to result
                                 // edit text
 //                                result.setText(userInput.getText());
@@ -161,15 +164,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                     snappydb = DBFactory.open(context); //create or open an existing databse using the default name
 
 //                                    Log.v("test",""+mobArray.get(mobArray.size()-1));
-                                    mobArray.add(""+userInput.getText());
+                                    mobArray.add("" + userInput.getText());
 //                                    Log.v("test2",""+mobArray.get(mobArray.size()-1));
 
-                                    String[] frnames2=mobArray.toArray(new String[mobArray.size()]);
+                                    String[] frnames2 = mobArray.toArray(new String[mobArray.size()]);
                                     snappydb.put("task_items", frnames2);
 
-                                    String[] testArr  =  snappydb.getArray("task_items", String.class);// get array of string
+                                    String[] testArr = snappydb.getArray("task_items", String.class);// get array of string
 
-                                    Util.showHelp("OS Name!",""+ testArr[testArr.length-1] +" is Selected",context);
+                                    Util.showHelp("OS Name!", "" + testArr[testArr.length - 1] + " is Selected", context);
 
 
                                     snappydb.close();
@@ -184,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         })
                 .setNegativeButton("Cancel",
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
+                            public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
                         });
